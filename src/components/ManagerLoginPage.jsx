@@ -25,7 +25,7 @@ export function ManagerLoginPage() {
     // Handle form submission logic with formData
     try {
       const response = await axios.post(
-        "http://localhost:9090/app/v1/login",
+        "http://localhost:9090/api/v1/login",
         formData
       );
       console.log("Form submitted:", response.data);
