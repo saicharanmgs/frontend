@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export function EmployeeLoginPage() {
   let [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    id: "",
+    employeeId: "",
     password: ""
   });
 
