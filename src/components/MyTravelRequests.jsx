@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import "../styles/MyTravelRequests.css"; // Import the CSS file
+import "../styles/MyTravelRequests.css"; // Import the CSS file
 
 export function MyTravelRequests() {
   const [travelRequests, setTravelRequests] = useState([]);
@@ -29,11 +29,11 @@ export function MyTravelRequests() {
   const getButtonClass = (status) => {
     switch (status) {
       case 'Pending':
-        return 'btn btn-secondary disabled'; // Grey and disabled
+        return 'btn btn-secondary '; // Grey and disabled
       case 'Approved':
         return 'btn btn-success'; // Green
       case 'Rejected':
-        return 'btn btn-danger disabled'; // Red and disabled
+        return 'btn btn-danger '; // Red and disabled
       default:
         return 'btn btn-secondary'; // Default
     }

@@ -1,8 +1,8 @@
 /* MyTravelRequests.css */
 
 .btn-secondary.disabled {
-    background-color: rgb(36, 40, 3);
-    border-color: rgb(255, 255, 255);
+    background-color: grey;
+    border-color: grey;
     cursor: not-allowed;
   }
   
