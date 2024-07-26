@@ -1,0 +1,20 @@
+/* MyTravelRequests.css */
+
+.btn-secondary.disabled {
+    background-color: rgb(36, 40, 3);
+    border-color: rgb(255, 255, 255);
+    cursor: not-allowed;
+  }
+  
+  .btn-success {
+    background-color: green;
+    border-color: green;
+    cursor: not-allowed;
+  }
+  
+  .btn-danger.disabled {
+    background-color: red;
+    border-color: red;
+    cursor: not-allowed;
+  }
+  

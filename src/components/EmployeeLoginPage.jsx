@@ -2,13 +2,24 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+} from "../features/auth/authSlice.js";
 
 export function EmployeeLoginPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.auth.status);
+  const error = useSelector((state) => state.auth.error);
+
   let [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     employeeId: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (event) => {
@@ -22,7 +33,7 @@ export function EmployeeLoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData)
+    console.log(formData);
     // Handle form submission logic with formData
     try {
       const response = await axios.post(
@@ -30,12 +41,17 @@ export function EmployeeLoginPage() {
         formData
       );
       console.log("Form submitted:", response.data);
-      // Optionally, reset the form after successful submission
-      toast.success(
-        "Login success"
+      dispatch(
+        loginSuccess({
+          userId: response.data.employeeId,
+          managerId: response.data.managerId
+        })
       );
+      navigate("/employeedashboard");
+      toast.success("Login success");
       setMessage("Login success");
     } catch (error) {
+      dispatch(loginFailure("User ID or password is incorrect"));
       toast.error("User Id or password is incorrect");
       setMessage("User Id or password is incorrect");
     }
@@ -45,9 +61,7 @@ export function EmployeeLoginPage() {
     <>
       <div className="container-fluid d-flex justify-content-center align-items-center">
         <div className="w-25">
-          <h3 className="alert alert-primary text-center">
-            Employee Log In
-          </h3>
+          <h3 className="alert alert-primary text-center">Employee Log In</h3>
           <hr />
 
           <form onSubmit={handleSubmit}>
@@ -56,7 +70,7 @@ export function EmployeeLoginPage() {
               <input
                 type="number"
                 className="form-control form-control-lg"
-                name="id"
+                name="employeeId"
                 value={formData.name}
                 onChange={handleChange}
               />
