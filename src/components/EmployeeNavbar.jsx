@@ -16,7 +16,7 @@ export function EmployeeNavbar() {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
-          <Link to="/employeedashboard" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             Home
           </Link>
           <button

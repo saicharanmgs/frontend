@@ -16,7 +16,7 @@ export function ManagerNavbar() {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
-          <Link to="/managerdashboard" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             Home
           </Link>
           <button
@@ -38,7 +38,7 @@ export function ManagerNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/travelrequests" className="nav-link text-white">
+                <Link to="/manager-travel-requests" className="nav-link text-white">
                   Travel Requests
                 </Link>
               </li>
