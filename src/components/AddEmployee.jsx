@@ -6,14 +6,15 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function AddEmployee() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     phone: "",
     designation: "",
     mail: "",
     password: "",
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
   const userId = useSelector((state) => state.auth.userId);
   const navigate = useNavigate();
@@ -28,7 +29,6 @@ export function AddEmployee() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("WDrrrrrrrrrrrrrrrrrrd  " , userId);
     try {
       console.log("Submitting form with data:", formData);
       const response = await axios.post("http://localhost:9090/api/v1/save", {
@@ -38,6 +38,10 @@ export function AddEmployee() {
       console.log("Response received:", response.data);
       toast.success("Profile created successfully! with id " + response.data.employeeId);
       setMessage("Employee added successfully! with id " + response.data.employeeId);
+
+      // Clear the form after successful submission
+      setFormData(initialFormData);  // Reset to initial state
+
     } catch (error) {
       console.error("Submission error:", error);
       setMessage("Failed to add employee. Please try again.");
@@ -94,7 +98,7 @@ export function AddEmployee() {
             <div className="form-group">
               <label>Email</label>
               <input
-                type="text"
+                type="text" 
                 className="form-control"
                 name="mail"
                 value={formData.mail}

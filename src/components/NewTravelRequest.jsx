@@ -6,15 +6,16 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function NewTravelRequest() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     destination: "",
-    fromLocation:"",
+    fromLocation: "",
     startDate: "",
     endDate: "",
     reason: "",
-    amount: "" 
-  });
+    amount: ""
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [message, setMessage] = useState("");
   const userId = useSelector((state) => state.auth.userId);
   const managerId = useSelector((state) => state.auth.managerId);
@@ -37,11 +38,17 @@ export function NewTravelRequest() {
         requestDate,
         ...formData,
         employeeId: userId,
-        managerId:managerId,
+        managerId: managerId,
       });
       console.log("Response received:", response.data);
+      
+      // Show success message
       toast.success("Travel request submitted successfully!");
       setMessage("Travel request submitted successfully!");
+
+      // Clear the form
+      setFormData(initialFormData);  // Reset to initial state
+
     } catch (error) {
       console.error("Submission error:", error);
       setMessage("Failed to submit travel request. Please try again.");
@@ -52,20 +59,18 @@ export function NewTravelRequest() {
   return (
     <>
       <div className="container-fluid d-flex justify-content-center align-items-center">
-        <div className="w-25"> {/* Adjust width as needed */}
-          <h3 className="alert alert-primary text-center">
-            New Travel Request
-          </h3>
+        <div className="w-25">
+          <h3 className="alert alert-primary text-center">New Travel Request</h3>
           <hr />
 
           <form onSubmit={handleSubmit}>
-          <div className="form-group">
+            <div className="form-group">
               <label>From</label>
               <input
                 type="text"
                 className="form-control"
                 name="fromLocation"
-                value={formData.from}
+                value={formData.fromLocation} // Corrected from formData.from to formData.fromLocation
                 onChange={handleChange}
                 required
               />
