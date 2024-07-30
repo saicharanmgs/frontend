@@ -41,19 +41,39 @@ export function EmployeeLoginPage() {
         formData
       );
       console.log("Form submitted:", response.data);
+      
+      // Dispatch login success action
       dispatch(
         loginSuccess({
           userId: response.data.employeeId,
-          managerId: response.data.managerId
+          managerId: response.data.managerId,
+          designation: response.data.designation // Assuming designation is returned
         })
       );
-      navigate("/employeedashboard");
+
+      // Get the dashboard path based on the designation
+      const dashboardPath = getDashboardPath(response.data.designation);
+      navigate(dashboardPath);
       toast.success("Login success");
       setMessage("Login success");
     } catch (error) {
       dispatch(loginFailure("User ID or password is incorrect"));
       toast.error("User Id or password is incorrect");
       setMessage("User Id or password is incorrect");
+    }
+  };
+
+  // Function to get the dashboard path based on designation
+  const getDashboardPath = (designation) => {
+    switch (designation) {
+      case "Employee":
+        return "/employeedashboard";
+      case "Manager":
+        return "/managerdashboard";
+      case "Travel Agent":
+        return "/travelagentdashboard";
+      default:
+        return "/"; // Default path if designation is unknown
     }
   };
 
@@ -71,7 +91,7 @@ export function EmployeeLoginPage() {
                 type="number"
                 className="form-control form-control-lg"
                 name="employeeId"
-                value={formData.name}
+                value={formData.employeeId} // Corrected from name to employeeId
                 onChange={handleChange}
               />
             </div>
