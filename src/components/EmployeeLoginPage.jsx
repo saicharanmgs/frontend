@@ -73,7 +73,7 @@ export function EmployeeLoginPage() {
       case "Travel Agent":
         return "/travelagentdashboard";
       default:
-        return "/"; // Default path if designation is unknown
+        return "/employeedashboard"; // Default path if designation is unknown
     }
   };
 
