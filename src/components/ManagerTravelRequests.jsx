@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 export function ManagerTravelRequests() {
   const [travelRequests, setTravelRequests] = useState([]);
+  const [comments, setComments] = useState({});
   const userId = useSelector((state) => state.auth.userId); // Assume this is the manager's ID
   console.log(userId);
 
@@ -40,19 +40,25 @@ export function ManagerTravelRequests() {
   };
 
   const handleApproval = async (requestId, status) => {
+    const managerComments = comments[requestId] || "";
     try {
       await axios.put(`http://localhost:9090/api/v1/manager-travel-requests/${requestId}`, {
         managerApprovalStatus: status,
+        managerComments: managerComments,
       });
       // Update local state to reflect the change
       setTravelRequests(travelRequests.map(request =>
         request.requestId === requestId
-          ? { ...request, managerApprovalStatus: status }
+          ? { ...request, managerApprovalStatus: status, managerComments }
           : request
       ));
     } catch (error) {
       console.error(`Error updating request ${requestId}`, error);
     }
+  };
+
+  const handleCommentChange = (requestId, value) => {
+    setComments({ ...comments, [requestId]: value });
   };
 
   return (
@@ -94,7 +100,18 @@ export function ManagerTravelRequests() {
                     {request.managerApprovalStatus}
                   </button>
                 </td>
-                <td>{request.managerComments}</td>
+                <td>
+                  {request.managerApprovalStatus === 'Pending' ? (
+                    <textarea
+                      className="form-control"
+                      placeholder="Enter comments"
+                      value={comments[request.requestId] || ""}
+                      onChange={(e) => handleCommentChange(request.requestId, e.target.value)}
+                    />
+                  ) : (
+                    request.managerComments
+                  )}
+                </td>
                 <td>
                   <button className={getButtonClass(request.travelAgentApprovalStatus)}>
                     {request.travelAgentApprovalStatus}
@@ -105,7 +122,7 @@ export function ManagerTravelRequests() {
                   {request.managerApprovalStatus === 'Pending' && (
                     <>
                       <button
-                        className="btn btn-success"
+                        className="btn btn-success mr-2"
                         onClick={() => handleApproval(request.requestId, 'Approved')}
                       >
                         Approve
