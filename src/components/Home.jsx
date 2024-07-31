@@ -17,7 +17,15 @@ export function Home() {
                 This app is completely developed by me Lorem ipsum dolor sit amet.
             </p>
             <Link to="/employeelogin" className="btn btn-primary">
-              Login
+              Employee and Manager Login
+            </Link>
+            <p className="lead">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              pharetra elit ut justo pulvinar, sed ullamcorper felis tempor.
+              Nulla facilisi. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero, consectetur?
+            </p>
+            <Link to="/travelagentlogin" className="btn btn-primary">
+               Travel Agent Login
             </Link>
           </div>
         </div>
