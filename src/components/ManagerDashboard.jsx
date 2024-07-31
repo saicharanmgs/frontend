@@ -3,14 +3,19 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export function ManagerDashboard() {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize navigate function
   const userId = useSelector((state) => state.auth.userId);
+
+  // Handle logout and redirect to home page
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout()); // Dispatch logout action
+    navigate('/'); // Redirect to the home page
   };
+
   return (
     <>
       <div
