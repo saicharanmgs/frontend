@@ -15,6 +15,7 @@ import { ManagerNavbar } from "./components/ManagerNavbar";
 import { NewTravelRequest } from "./components/NewTravelRequest";
 import { MyTravelRequests } from "./components/MyTravelRequests";
 import { ManagerTravelRequests} from "./components/ManagerTravelRequests"
+import EmployeesByManager from "./components/EmployeesByManager";
 <com></com>
 
 // this is root component all other components goes here
@@ -34,6 +35,7 @@ function App() {
           <Route path="/new-travelrequest" element={<><EmployeeNavbar/><NewTravelRequest /></>} />
           <Route path="/my-travel-requests" element={<><EmployeeNavbar /><MyTravelRequests /></>} />
           <Route path="/manager-travel-requests" element={<><ManagerNavbar /><ManagerTravelRequests /></>} />
+          <Route path="/myemployees" element={<><ManagerNavbar /><EmployeesByManager/></>} />
         </Routes>
       </Router>
     </>
