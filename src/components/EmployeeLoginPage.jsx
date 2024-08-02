@@ -34,24 +34,21 @@ export function EmployeeLoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(formData);
-    // Handle form submission logic with formData
     try {
       const response = await axios.post(
         "http://localhost:9090/api/v1/login",
         formData
       );
       console.log("Form submitted:", response.data);
-      
-      // Dispatch login success action
+
       dispatch(
         loginSuccess({
           userId: response.data.employeeId,
           managerId: response.data.managerId,
-          designation: response.data.designation // Assuming designation is returned
+          designation: response.data.designation
         })
       );
 
-      // Get the dashboard path based on the designation
       const dashboardPath = getDashboardPath(response.data.designation);
       navigate(dashboardPath);
       toast.success("Login success");
@@ -63,7 +60,6 @@ export function EmployeeLoginPage() {
     }
   };
 
-  // Function to get the dashboard path based on designation
   const getDashboardPath = (designation) => {
     switch (designation) {
       case "Employee":
@@ -73,55 +69,74 @@ export function EmployeeLoginPage() {
       case "Travel Agent":
         return "/travelagentdashboard";
       default:
-        return "/employeedashboard"; // Default path if designation is unknown
+        return "/employeedashboard";
     }
   };
 
+  // Define inline styles
+  const containerStyle = {
+    backgroundImage: 'url("https://wallpapercave.com/wp/wp2939910.jpg")', // Path to your background image
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100vh', // Full viewport height
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
+  const loginBoxStyle = {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // White color with 80% opacity
+    padding: '15px', // Adjust padding to fit the smaller box
+    borderRadius: '8px', // Slightly smaller border-radius
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Slightly smaller shadow
+    width: '100%', // Width as a percentage of the parent container
+    maxWidth: '300px', // Maximum width of the login box
+    height: 'auto', // Automatically adjust height based on content
+  };
+
   return (
-    <>
-      <div className="container-fluid d-flex justify-content-center align-items-center">
-        <div className="w-25">
-          <h3 className="alert alert-primary text-center">Employee Log In</h3>
-          <hr />
+    <div style={containerStyle}>
+      <div style={loginBoxStyle}>
+        <h3 className="alert alert-primary text-center">Employee Log In</h3>
+        <hr />
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Enter User Id</label>
-              <input
-                type="number"
-                className="form-control form-control-lg"
-                name="employeeId"
-                value={formData.employeeId} // Corrected from name to employeeId
-                onChange={handleChange}
-              />
-            </div>
-            <br />
-
-            <div className="form-group">
-              <label>Enter Password</label>
-              <input
-                type="password"
-                className="form-control form-control-lg"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <br />
-            <div className="form-group">
-              <input
-                type="submit"
-                value="Log in"
-                className="btn btn-primary btn-lg w-100"
-              />
-            </div>
-          </form>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Enter User Id</label>
+            <input
+              type="number"
+              className="form-control form-control-lg"
+              name="employeeId"
+              value={formData.employeeId}
+              onChange={handleChange}
+            />
+          </div>
           <br />
 
-          <h6>{message}</h6>
-        </div>
+          <div className="form-group">
+            <label>Enter Password</label>
+            <input
+              type="password"
+              className="form-control form-control-lg"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Log in"
+              className="btn btn-primary btn-lg w-100"
+            />
+          </div>
+        </form>
+        <br />
+
+        <h6>{message}</h6>
       </div>
-    </>
+    </div>
   );
 }
 
