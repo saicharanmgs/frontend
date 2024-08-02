@@ -5,6 +5,7 @@ const authSlice = createSlice({
   initialState: {
     userId: null,
     managerId: null,
+    travelAgentId: null, // Add travelAgentId to the initial state
     token: null,
     status: 'idle', // 'idle', 'loading', 'succeeded', 'failed'
     error: null,
@@ -16,8 +17,9 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.status = 'succeeded';
       state.userId = action.payload.userId;
-      state.token = action.payload.token;
       state.managerId = action.payload.managerId;
+      state.travelAgentId = action.payload.travelAgentId; // Set travelAgentId on login
+      state.token = action.payload.token;
     },
     loginFailure: (state, action) => {
       state.status = 'failed';
@@ -25,6 +27,8 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       state.userId = null;
+      state.managerId = null;
+      state.travelAgentId = null; // Clear travelAgentId on logout
       state.token = null;
       state.status = 'idle';
     },

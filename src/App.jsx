@@ -16,6 +16,9 @@ import { NewTravelRequest } from "./components/NewTravelRequest";
 import { MyTravelRequests } from "./components/MyTravelRequests";
 import { ManagerTravelRequests} from "./components/ManagerTravelRequests"
 import EmployeesByManager from "./components/EmployeesByManager";
+import TravelAgentDashboard from "./components/TravelAgentDashboard";
+import TravelAgentNavbar from "./components/TravelAgentNavbar";
+import TravelAgentRequests from "./components/TravelAgentRequests";
 <com></com>
 
 // this is root component all other components goes here
@@ -36,6 +39,8 @@ function App() {
           <Route path="/my-travel-requests" element={<><EmployeeNavbar /><MyTravelRequests /></>} />
           <Route path="/manager-travel-requests" element={<><ManagerNavbar /><ManagerTravelRequests /></>} />
           <Route path="/myemployees" element={<><ManagerNavbar /><EmployeesByManager/></>} />
+          <Route path="/travel-agent-dashboard" element={<><TravelAgentNavbar /><TravelAgentDashboard/></>} />
+          <Route path="/travel-agent-requests" element={<><TravelAgentNavbar /><TravelAgentRequests/></>} />
         </Routes>
       </Router>
     </>
