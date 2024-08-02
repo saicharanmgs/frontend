@@ -67,7 +67,7 @@ export function EmployeeLoginPage() {
       case "Manager":
         return "/managerdashboard";
       case "Travel Agent":
-        return "/travelagentdashboard";
+        return "/travel-agent-dashboard-v2";
       default:
         return "/employeedashboard";
     }

@@ -18,6 +18,9 @@ import { ManagerTravelRequests} from "./components/ManagerTravelRequests"
 import EmployeesByManager from "./components/EmployeesByManager";
 import TravelAgentDashboard from "./components/TravelAgentDashboard";
 import TravelAgentNavbar from "./components/TravelAgentNavbar";
+import TravelAgentDashboardV2 from "./components/TravelAgentDashboardV2";
+import TravelAgentNavbarV2 from "./components/TravelAgentNavbarV2";
+import TravelAgentRequestsV2  from "./components/TravelAgentRequestsV2";
 import TravelAgentRequests from "./components/TravelAgentRequests";
 <com></com>
 
@@ -32,7 +35,9 @@ function App() {
           <Route path="/managerlogin" element={<ManagerLoginPage />}/>
           <Route path="/travelagentlogin" element={<TravelAgentLoginPage />}/>
           <Route path="/managerdashboard" element={<><ManagerNavbar></ManagerNavbar><ManagerDashboard /></>} />
-          
+          <Route path="/travel-agent-dashboard-v2" element={<><TravelAgentNavbarV2 /><TravelAgentDashboardV2/></>} />
+          <Route path="/travel-agent-requests-v2" element={<><TravelAgentNavbarV2 /><TravelAgentRequestsV2/></>} />
+
           <Route path="/addemployee" element={<><ManagerNavbar></ManagerNavbar><AddEmployee /></>} />
           <Route path="/employeedashboard" element={<><EmployeeNavbar/><EmployeeDashboard /></>} />
           <Route path="/new-travelrequest" element={<><EmployeeNavbar/><NewTravelRequest /></>} />
