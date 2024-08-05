@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 export function ManagerTravelRequests() {
   const [travelRequests, setTravelRequests] = useState([]);
   const [comments, setComments] = useState({});
+  const [travelAgentIds, setTravelAgentIds] = useState({});
+  const [availableTravelAgents, setAvailableTravelAgents] = useState([]); // New state for available travel agents
   const userId = useSelector((state) => state.auth.userId); // Assume this is the manager's ID
   console.log(userId);
 
   useEffect(() => {
-    // Fetch travel requests that need manager approval when the component mounts
     const fetchTravelRequests = async () => {
       try {
         const response = await axios.get(`http://localhost:9090/api/v1/manager-travel-requests`, {
@@ -23,7 +24,17 @@ export function ManagerTravelRequests() {
       }
     };
 
+    const fetchAvailableTravelAgents = async () => {
+      try {
+        const response = await axios.get(`http://localhost:9090/api/v1/get-travel-agent-ids`);
+        setAvailableTravelAgents(response.data); // Store available travel agent IDs
+      } catch (error) {
+        console.error("Error fetching travel agent IDs", error);
+      }
+    };
+
     fetchTravelRequests();
+    fetchAvailableTravelAgents(); // Fetch travel agent IDs
   }, [userId]);
 
   const getButtonClass = (status) => {
@@ -41,15 +52,16 @@ export function ManagerTravelRequests() {
 
   const handleApproval = async (requestId, status) => {
     const managerComments = comments[requestId] || "";
+    const travelAgentId = travelAgentIds[requestId] || ""; // Get the travel agent ID from state
     try {
       await axios.put(`http://localhost:9090/api/v1/manager-travel-requests/${requestId}`, {
         managerApprovalStatus: status,
         managerComments: managerComments,
+        travelAgentId: travelAgentId, // Send travel agent ID along with other data
       });
-      // Update local state to reflect the change
       setTravelRequests(travelRequests.map(request =>
         request.requestId === requestId
-          ? { ...request, managerApprovalStatus: status, managerComments }
+          ? { ...request, managerApprovalStatus: status, managerComments, travelAgentId }
           : request
       ));
     } catch (error) {
@@ -59,6 +71,10 @@ export function ManagerTravelRequests() {
 
   const handleCommentChange = (requestId, value) => {
     setComments({ ...comments, [requestId]: value });
+  };
+
+  const handleTravelAgentIdChange = (requestId, value) => {
+    setTravelAgentIds({ ...travelAgentIds, [requestId]: value });
   };
 
   return (
@@ -80,6 +96,7 @@ export function ManagerTravelRequests() {
             <th>Manager Comments</th>
             <th>Travel Agent Approval Status</th>
             <th>Travel Agent Comments</th>
+            <th>Travel Agent ID</th> {/* Dropdown for Travel Agent ID */}
             <th>Actions</th>
           </tr>
         </thead>
@@ -118,6 +135,18 @@ export function ManagerTravelRequests() {
                   </button>
                 </td>
                 <td>{request.travelAgentComments}</td>
+                <td>
+                  <select
+                    className="form-control"
+                    value={travelAgentIds[request.requestId] || ""}
+                    onChange={(e) => handleTravelAgentIdChange(request.requestId, e.target.value)}
+                  >
+                    <option value="">Select Travel Agent ID</option>
+                    {availableTravelAgents.map((agentId) => (
+                      <option key={agentId} value={agentId}>{agentId}</option>
+                    ))}
+                  </select>
+                </td>
                 <td>
                   {request.managerApprovalStatus === 'Pending' && (
                     <>
