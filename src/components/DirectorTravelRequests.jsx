@@ -2,21 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 
-export function ManagerTravelRequests() {
+export function DirectorTravelRequests() {
   const [travelRequests, setTravelRequests] = useState([]);
   const [comments, setComments] = useState({});
-  const [travelAgentIds, setTravelAgentIds] = useState({});
-  const [availableTravelAgents, setAvailableTravelAgents] = useState([]); // New state for available travel agents
-  const userId = useSelector((state) => state.auth.userId); // Assume this is the manager's ID
-  console.log(userId);
+  const userId = useSelector((state) => state.auth.userId); // Assume this is the director's ID
 
   useEffect(() => {
     const fetchTravelRequests = async () => {
       try {
-        const response = await axios.get(`http://localhost:9090/api/v1/manager-travel-requests`, {
-            params: {
-              managerId: userId,
-            },
+        const response = await axios.get(`http://localhost:9090/api/v1/director-travel-requests`, {
+          params: {
+            managerId: userId,
+          },
         });
         setTravelRequests(response.data);
       } catch (error) {
@@ -24,17 +21,7 @@ export function ManagerTravelRequests() {
       }
     };
 
-    const fetchAvailableTravelAgents = async () => {
-      try {
-        const response = await axios.get(`http://localhost:9090/api/v1/get-travel-agent-ids`);
-        setAvailableTravelAgents(response.data); // Store available travel agent IDs
-      } catch (error) {
-        console.error("Error fetching travel agent IDs", error);
-      }
-    };
-
     fetchTravelRequests();
-    fetchAvailableTravelAgents(); // Fetch travel agent IDs
   }, [userId]);
 
   const getButtonClass = (status) => {
@@ -52,16 +39,22 @@ export function ManagerTravelRequests() {
 
   const handleApproval = async (requestId, status) => {
     const managerComments = comments[requestId] || "";
-    const travelAgentId = travelAgentIds[requestId] || ""; // Get the travel agent ID from state
+    const travelAgentId = travelRequests.find(req => req.requestId === requestId)?.travelAgentId || ""; // Get the travel agent ID from request data
     try {
-      await axios.put(`http://localhost:9090/api/v1/manager-travel-requests/${requestId}`, {
+      await axios.put(`http://localhost:9090/api/v1/director-travel-requests-v2/${requestId}`, {
         managerApprovalStatus: status,
-        managerComments: managerComments,
-        travelAgentId: travelAgentId, // Send travel agent ID along with other data
+        managerComments: "Overridden by director",
+        travelAgentApprovalStatus: status, 
+        travelAgentComments:"Overridden by director"
       });
       setTravelRequests(travelRequests.map(request =>
         request.requestId === requestId
-          ? { ...request, managerApprovalStatus: status, managerComments, travelAgentId }
+          ? { ...request,
+            managerApprovalStatus: status,
+            managerComments :'Overridden by director',
+            travelAgentApprovalStatus:status,
+            travelAgentComments: 'Overridden by director'
+        }
           : request
       ));
     } catch (error) {
@@ -71,10 +64,6 @@ export function ManagerTravelRequests() {
 
   const handleCommentChange = (requestId, value) => {
     setComments({ ...comments, [requestId]: value });
-  };
-
-  const handleTravelAgentIdChange = (requestId, value) => {
-    setTravelAgentIds({ ...travelAgentIds, [requestId]: value });
   };
 
   return (
@@ -96,7 +85,7 @@ export function ManagerTravelRequests() {
             <th>Manager Comments</th>
             <th>Travel Agent Approval Status</th>
             <th>Travel Agent Comments</th>
-            <th>Travel Agent ID</th> {/* Dropdown for Travel Agent ID */}
+            <th>Travel Agent ID</th> {/* Display Travel Agent ID instead of dropdown */}
             <th>Actions</th>
           </tr>
         </thead>
@@ -136,31 +125,21 @@ export function ManagerTravelRequests() {
                 </td>
                 <td>{request.travelAgentComments}</td>
                 <td>
-                  <select
-                    className="form-control"
-                    value={travelAgentIds[request.requestId] || ""}
-                    onChange={(e) => handleTravelAgentIdChange(request.requestId, e.target.value)}
-                  >
-                    <option value="">Select Travel Agent ID</option>
-                    {availableTravelAgents.map((agentId) => (
-                      <option key={agentId} value={agentId}>{agentId}</option>
-                    ))}
-                  </select>
+                  {/* Displaying Travel Agent ID directly from the request data */}
+                  {request.travelAgentId || 'N/A'} {/* Show 'N/A' if no agent is assigned */}
                 </td>
                 <td>
-                  {request.managerApprovalStatus === 'Pending' && (
+                  {( request.managerApprovalStatus == 'Rejected'|| request.travelAgentApprovalStatus == 'Rejected')&&(
                     <>
                       <button
                         className="btn btn-success mr-2"
                         onClick={() => handleApproval(request.requestId, 'Approved')}
-                        disabled={!travelAgentIds[request.requestId]} // Disable if no travel agent ID is selected
                       >
                         Approve
                       </button>
                       <button
                         className="btn btn-danger"
                         onClick={() => handleApproval(request.requestId, 'Rejected')}
-                        disabled={!travelAgentIds[request.requestId]} // Disable if no travel agent ID is selected
                       >
                         Reject
                       </button>
@@ -180,4 +159,4 @@ export function ManagerTravelRequests() {
   );
 }
 
-export default ManagerTravelRequests;
+export default DirectorTravelRequests;

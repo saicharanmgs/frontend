@@ -10,6 +10,9 @@ import { TravelAgentLoginPage } from "./components/TravelAgentLoginPage";
 import { ManagerDashboard } from "./components/ManagerDashboard";
 import { EmployeeDashboard } from "./components/EmployeeDashboard";
 import { EmployeeNavbar } from "./components/EmployeeNavbar";
+import { DirectorDashboard } from "./components/DirectorDashboard";
+import { DirectorNavbar } from "./components/DirectorNavbar";
+import { DirectorTravelRequests } from "./components/DirectorTravelRequests";
 import { AddEmployee } from "./components/AddEmployee";
 import { ManagerNavbar } from "./components/ManagerNavbar";
 import { NewTravelRequest } from "./components/NewTravelRequest";
@@ -38,11 +41,13 @@ function App() {
           <Route path="/travel-agent-dashboard-v2" element={<><TravelAgentNavbarV2 /><TravelAgentDashboardV2/></>} />
           <Route path="/travel-agent-requests-v2" element={<><TravelAgentNavbarV2 /><TravelAgentRequestsV2/></>} />
 
+          <Route path="/directordashboard" element={<><DirectorNavbar></DirectorNavbar><DirectorDashboard /></>} />
           <Route path="/addemployee" element={<><ManagerNavbar></ManagerNavbar><AddEmployee /></>} />
           <Route path="/employeedashboard" element={<><EmployeeNavbar/><EmployeeDashboard /></>} />
           <Route path="/new-travelrequest" element={<><EmployeeNavbar/><NewTravelRequest /></>} />
           <Route path="/my-travel-requests" element={<><EmployeeNavbar /><MyTravelRequests /></>} />
           <Route path="/manager-travel-requests" element={<><ManagerNavbar /><ManagerTravelRequests /></>} />
+          <Route path="/director-travel-requests" element={<><DirectorNavbar /><DirectorTravelRequests /></>} />
           <Route path="/myemployees" element={<><ManagerNavbar /><EmployeesByManager/></>} />
           <Route path="/travel-agent-dashboard" element={<><TravelAgentNavbar /><TravelAgentDashboard/></>} />
           <Route path="/travel-agent-requests" element={<><TravelAgentNavbar /><TravelAgentRequests/></>} />
