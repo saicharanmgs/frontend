@@ -31,7 +31,6 @@ export function AddEmployee() {
   const validateForm = () => {
     const newErrors = {};
     const { name, phone, designation, mail, password } = formData;
-    
     // Password validation rules
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -72,8 +71,8 @@ export function AddEmployee() {
         managerId: userId,
       });
       console.log("Response received:", response.data);
-      toast.success("Profile created successfully! with id " + response.data.employeeId);
-      setMessage("Employee added successfully! with id " + response.data.employeeId);
+      toast.success("Profile created successfully! with userId " + response.data.userId);
+      setMessage("Employee added successfully! with userId " + response.data.userId);
 
       // Clear the form after successful submission
       setFormData(initialFormData);  // Reset to initial state
