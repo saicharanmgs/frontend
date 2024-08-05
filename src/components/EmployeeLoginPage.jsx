@@ -16,24 +16,44 @@ export function EmployeeLoginPage() {
   const authStatus = useSelector((state) => state.auth.status);
   const error = useSelector((state) => state.auth.error);
 
-  let [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
     employeeId: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
     setFormData({
       ...formData,
       [name]: value,
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    const { employeeId, password } = formData;
+
+    // Validate Employee ID
+    if (!employeeId.trim()) {
+      newErrors.employeeId = "Employee ID is required.";
+    }
+
+    // Validate Password
+    if (!password.trim()) {
+      newErrors.password = "Password is required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(formData);
+    if (!validateForm()) return;
+
+    dispatch(loginRequest());
     try {
       const response = await axios.post(
         "http://localhost:9090/api/v1/login",
@@ -69,7 +89,7 @@ export function EmployeeLoginPage() {
       case "Travel Agent":
         return "/travel-agent-dashboard-v2";
       case "Director":
-        return "/directordashboard"
+        return "/directordashboard";
       default:
         return "/employeedashboard";
     }
@@ -77,23 +97,23 @@ export function EmployeeLoginPage() {
 
   // Define inline styles
   const containerStyle = {
-    backgroundImage: 'url("https://wallpapercave.com/wp/wp2939910.jpg")', // Path to your background image
+    backgroundImage: 'url("https://wallpapercave.com/wp/wp2939910.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: '100vh', // Full viewport height
+    height: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   };
 
   const loginBoxStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // White color with 80% opacity
-    padding: '15px', // Adjust padding to fit the smaller box
-    borderRadius: '8px', // Slightly smaller border-radius
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Slightly smaller shadow
-    width: '100%', // Width as a percentage of the parent container
-    maxWidth: '300px', // Maximum width of the login box
-    height: 'auto', // Automatically adjust height based on content
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: '15px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    width: '100%',
+    maxWidth: '300px',
+    height: 'auto',
   };
 
   return (
@@ -107,11 +127,12 @@ export function EmployeeLoginPage() {
             <label>Enter User Id</label>
             <input
               type="number"
-              className="form-control form-control-lg"
+              className={`form-control form-control-lg ${errors.employeeId ? 'is-invalid' : ''}`}
               name="employeeId"
               value={formData.employeeId}
               onChange={handleChange}
             />
+            {errors.employeeId && <div className="invalid-feedback">{errors.employeeId}</div>}
           </div>
           <br />
 
@@ -119,11 +140,12 @@ export function EmployeeLoginPage() {
             <label>Enter Password</label>
             <input
               type="password"
-              className="form-control form-control-lg"
+              className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
               name="password"
               value={formData.password}
               onChange={handleChange}
             />
+            {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
           <br />
           <div className="form-group">
