@@ -93,6 +93,7 @@ export function AddEmployee() {
                 <option value="">Select designation</option>
                 <option value="Employee">Employee</option>
                 <option value="Travel Agent">Travel Agent</option>
+                <option value="Manager">Manager</option>
               </select>
             </div>
             <div className="form-group">
