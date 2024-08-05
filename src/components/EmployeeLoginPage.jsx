@@ -18,7 +18,7 @@ export function EmployeeLoginPage() {
 
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    employeeId: "",
+    UserId: "",
     password: "",
   });
   const [errors, setErrors] = useState({});
@@ -33,11 +33,11 @@ export function EmployeeLoginPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    const { employeeId, password } = formData;
+    const { userId, password } = formData;
 
     // Validate Employee ID
-    if (!employeeId.trim()) {
-      newErrors.employeeId = "Employee ID is required.";
+    if (!userId.trim()) {
+      newErrors.userId = "Employee ID is required.";
     }
 
     // Validate Password
@@ -126,13 +126,13 @@ export function EmployeeLoginPage() {
           <div className="form-group">
             <label>Enter User Id</label>
             <input
-              type="number"
-              className={`form-control form-control-lg ${errors.employeeId ? 'is-invalid' : ''}`}
-              name="employeeId"
-              value={formData.employeeId}
+              type="text"
+              className={`form-control form-control-lg ${errors.userId ? 'is-invalid' : ''}`}
+              name="userId"
+              value={formData.userId}
               onChange={handleChange}
             />
-            {errors.employeeId && <div className="invalid-feedback">{errors.employeeId}</div>}
+            {errors.userId && <div className="invalid-feedback">{errors.userId}</div>}
           </div>
           <br />
 

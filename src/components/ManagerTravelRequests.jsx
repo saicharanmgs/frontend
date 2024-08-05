@@ -91,7 +91,7 @@ export function ManagerTravelRequests() {
             <th>End Date</th>
             <th>Amount</th>
             <th>Reason</th>
-            <th>Employee</th>
+            <th>User Id</th>
             <th>Manager Approval Status</th>
             <th>Manager Comments</th>
             <th>Travel Agent Approval Status</th>
@@ -111,7 +111,7 @@ export function ManagerTravelRequests() {
                 <td>{new Date(request.endDate).toLocaleDateString()}</td>
                 <td>{request.amount}</td>
                 <td>{request.reason}</td>
-                <td>{request.employeeId}</td>
+                <td>{request.userId || 'null'}</td>
                 <td>
                   <button className={getButtonClass(request.managerApprovalStatus)}>
                     {request.managerApprovalStatus}

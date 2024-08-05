@@ -26,7 +26,7 @@ export function EmployeesByManager() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Employee ID</th>
+            <th>User ID</th>
             <th>Name</th>
             <th>Phone</th>
             <th>Designation</th>
@@ -37,7 +37,7 @@ export function EmployeesByManager() {
           {employees.length > 0 ? (
             employees.map((employee) => (
               <tr key={employee.employeeId}>
-                <td>{employee.employeeId}</td>
+                <td>{employee.userId}</td>
                 <td>{employee.name}</td>
                 <td>{employee.phone}</td>
                 <td>{employee.designation}</td>
