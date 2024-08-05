@@ -1,10 +1,7 @@
-// components/ManagerDashboard.jsx
-
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
 import { Link } from "react-router-dom";
-
 
 export function DirectorNavbar() {
   const dispatch = useDispatch();
@@ -12,10 +9,11 @@ export function DirectorNavbar() {
   const handleLogout = () => {
     dispatch(logout());
   };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div className="container">
+        <div className="container-fluid">
           <Link to="/" className="navbar-brand">
             Home
           </Link>
@@ -44,8 +42,13 @@ export function DirectorNavbar() {
               </li>
               <li className="nav-item">
                 <Link to="/myemployees" className="nav-link text-white">
-                  My employees
+                  My Employees
                 </Link>
+              </li>
+              <li className="nav-item">
+                <button onClick={handleLogout} className="btn btn-outline-light">
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
