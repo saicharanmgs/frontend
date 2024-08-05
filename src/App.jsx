@@ -2,6 +2,9 @@ import "./App.css";
 // import { ProfileRegistration } from "./components/ProfileRegistration";
 // import { ProfileList } from "./components/ProfileList";
 import { Home } from "./components/Home";
+// Add this at the top of your main JavaScript file (e.g., index.js)
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // import { Navbar } from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { EmployeeLoginPage } from "./components/EmployeeLoginPage";
