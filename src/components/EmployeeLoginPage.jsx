@@ -22,6 +22,9 @@ export function EmployeeLoginPage() {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetErrors, setResetErrors] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -80,6 +83,27 @@ export function EmployeeLoginPage() {
     }
   };
 
+  const handleForgotPassword = async () => {
+    if (!resetEmail.trim()) {
+      setResetErrors({ email: "Email is required." });
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:9090/api/v1/forgot-password", {
+        email: resetEmail,
+      });
+      toast.success("Password reset link sent to your email.");
+      setShowForgotPassword(false);
+    } catch (error) {
+      toast.error("Failed to send password reset link.");
+    }
+  };
+
+  const handleResetChange = (event) => {
+    setResetEmail(event.target.value);
+  };  
+
   const getDashboardPath = (designation) => {
     switch (designation) {
       case "Employee":
@@ -127,10 +151,12 @@ const headingStyle = {
   return (
     <div style={containerStyle}>
       <div style={loginBoxStyle}>
-        <h3 className="alert alert-primary text-center" style = {headingStyle}>Employee Log In</h3>
+        <h3 className="alert alert-primary text-center" style={headingStyle}>
+          Employee Log In
+        </h3>
         <hr />
 
-        <form onSubmit={handleSubmit} style= {formstyle}>
+        <form onSubmit={handleSubmit} style={formstyle}>
           <div className="form-group">
             <label>Enter User ID</label>
             <input
@@ -163,11 +189,71 @@ const headingStyle = {
               className="btn btn-primary btn-lg w-100"
             />
           </div>
+          <br />
+          
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => setShowForgotPassword(true)}
+          >
+            Forgot Password
+          </button>
+          
         </form>
         <br />
-
         <h6>{message}</h6>
       </div>
+
+      
+      {showForgotPassword && (
+        <div className="modal" style={{
+          display: 'flex',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <div className="modal-content" style={{
+            backgroundColor: '#fff',
+            padding: '20px',
+            borderRadius: '8px',
+            maxWidth: '400px',
+            width: '100%',
+            margin: 'auto',
+          }}>
+            <h4>Forgot Password</h4>
+            <div className="form-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                className={`form-control ${resetErrors.email ? 'is-invalid' : ''}`}
+                value={resetEmail}
+                onChange={handleResetChange}  // Added handler for reset email input
+              />
+              {resetErrors.email && <div className="invalid-feedback">{resetErrors.email}</div>}
+            </div>
+            <br />
+            <button
+              className="btn btn-primary"
+              onClick={handleForgotPassword}  // Added handler for sending reset link
+            >
+              Send Reset Link
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setShowForgotPassword(false)}
+              style={{ marginLeft: '10px' }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+     
     </div>
   );
 }
