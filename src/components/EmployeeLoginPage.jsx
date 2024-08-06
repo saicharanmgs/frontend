@@ -106,8 +106,12 @@ export function EmployeeLoginPage() {
     justifyContent: 'center',
   };
 
+  const formstyle = {
+    color : 'aliceblue'
+  }
+
   const loginBoxStyle = {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: 'rgb(255 255 255 / 0%)',
     padding: '15px',
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -115,16 +119,20 @@ export function EmployeeLoginPage() {
     maxWidth: '300px',
     height: 'auto',
   };
-
+const headingStyle = {
+  backgroundColor: '#452f1200',
+  color: 'aliceblue',
+  borderColor: '#3e3e3e'
+}
   return (
     <div style={containerStyle}>
       <div style={loginBoxStyle}>
-        <h3 className="alert alert-primary text-center">Employee Log In</h3>
+        <h3 className="alert alert-primary text-center" style = {headingStyle}>Employee Log In</h3>
         <hr />
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style= {formstyle}>
           <div className="form-group">
-            <label>Enter User Id</label>
+            <label>Enter User ID</label>
             <input
               type="text"
               className={`form-control form-control-lg ${errors.userId ? 'is-invalid' : ''}`}
