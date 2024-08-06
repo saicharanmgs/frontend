@@ -40,18 +40,28 @@ function App() {
           <Route path="/employeelogin" element={<EmployeeLoginPage />}/>
           <Route path="/managerlogin" element={<ManagerLoginPage />}/>
           <Route path="/travelagentlogin" element={<TravelAgentLoginPage />}/>
-          <Route path="/managerdashboard" element={<><ManagerNavbar></ManagerNavbar><ManagerDashboard /></>} />
+
+          <Route path="/managerdashboard" element={<><ManagerNavbar/><ManagerDashboard /></>} />
+          <Route path="/manager-addemployee" element={<><ManagerNavbar /><AddEmployee /></>} />
+          <Route path="/manager-myemployees" element={<><ManagerNavbar />< EmployeesByManager/></>} />
+          <Route path="/manager-travel-requests" element={<><ManagerNavbar /><ManagerTravelRequests /></>} />
+          <Route path="/addemployee" element={<><ManagerNavbar/><AddEmployee /></>} />
+          <Route path="/myemployees" element={<><ManagerNavbar /><EmployeesByManager/></>} />
+
           <Route path="/travel-agent-dashboard-v2" element={<><TravelAgentNavbarV2 /><TravelAgentDashboardV2/></>} />
           <Route path="/travel-agent-requests-v2" element={<><TravelAgentNavbarV2 /><TravelAgentRequestsV2/></>} />
 
-          <Route path="/directordashboard" element={<><DirectorNavbar></DirectorNavbar><DirectorDashboard /></>} />
-          <Route path="/addemployee" element={<><ManagerNavbar></ManagerNavbar><AddEmployee /></>} />
+          <Route path="/employee-new-travelrequest" element={<><EmployeeNavbar/> <NewTravelRequest/></>} /> 
+          <Route path="/employee-my-travel-requests" element={<><EmployeeNavbar/><MyTravelRequests /></>} /> 
           <Route path="/employeedashboard" element={<><EmployeeNavbar/><EmployeeDashboard /></>} />
           <Route path="/new-travelrequest" element={<><EmployeeNavbar/><NewTravelRequest /></>} />
           <Route path="/my-travel-requests" element={<><EmployeeNavbar /><MyTravelRequests /></>} />
-          <Route path="/manager-travel-requests" element={<><ManagerNavbar /><ManagerTravelRequests /></>} />
+
+          <Route path="/addemployee-director" element={<><DirectorNavbar/><AddEmployee /></>} />
+          <Route path="/directordashboard" element={<><DirectorNavbar/><DirectorDashboard /></>} />
           <Route path="/director-travel-requests" element={<><DirectorNavbar /><DirectorTravelRequests /></>} />
-          <Route path="/myemployees" element={<><ManagerNavbar /><EmployeesByManager/></>} />
+          <Route path="/myemployees-director" element={<><DirectorNavbar /><EmployeesByManager/></>} />
+
           <Route path="/travel-agent-dashboard" element={<><TravelAgentNavbar /><TravelAgentDashboard/></>} />
           <Route path="/travel-agent-requests" element={<><TravelAgentNavbar /><TravelAgentRequests/></>} />
         </Routes>

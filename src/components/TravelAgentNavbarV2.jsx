@@ -3,20 +3,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 
 export function TravelAgentNavbarV2() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container">
-          <Link to="/" className="navbar-brand">
+          <Link to="/travel-agent-dashboard-v2" className="navbar-brand">
             Home
           </Link>
           <button

@@ -1,20 +1,22 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 
 export function DirectorNavbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.userId);
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand">
+          <Link to="/directordashboard" className="navbar-brand">
             Home
           </Link>
           <button
@@ -31,7 +33,7 @@ export function DirectorNavbar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link to="/addemployee" className="nav-link text-white">
+                <Link to="/addemployee-director" className="nav-link text-white">
                   Add Employee
                 </Link>
               </li>
@@ -41,7 +43,7 @@ export function DirectorNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/myemployees" className="nav-link text-white">
+                <Link to="/myemployees-director" className="nav-link text-white">
                   My Employees
                 </Link>
               </li>

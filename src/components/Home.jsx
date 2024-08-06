@@ -6,7 +6,7 @@ export function Home() {
     <div
       className="container-fluid"
       style={{
-        backgroundImage: `url('https://www.pixelstalk.net/wp-content/uploads/2016/08/Travel-Download-Free-Images-HD.jpg)`,
+        backgroundImage: `url('https://www.pixelstalk.net/wp-content/uploads/images6/Travel-Wallpaper-Free-Download.jpg)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -25,7 +25,7 @@ export function Home() {
 
     >
       <div>
-        <h2 style={{ fontSize: "2.5em", fontWeight: "bold", marginBottom: "20px" }}>
+        <h2 style={{ fontSize: "2.5em", fontWeight: "bold", marginBottom: "20px", color : "#39273d" }}>
           Welcome to the Employee <br/>Travel Request App
         </h2>
       </div>
@@ -36,7 +36,7 @@ export function Home() {
           style={{
             fontSize: "1.5em",
             padding: "10px 20px",
-            backgroundColor: "#6a0dad", // Change button color to red
+            backgroundColor: "rgb(221 243 219 / 13%)", // Change button color to red
             color: "#fff", // Ensure text color is white for contrast
             border: "none", // Remove default border
             borderRadius: "5px", // Optional: rounded corners

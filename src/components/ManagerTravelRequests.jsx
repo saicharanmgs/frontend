@@ -74,7 +74,9 @@ export function ManagerTravelRequests() {
   };
 
   const handleTravelAgentIdChange = (requestId, value) => {
-    setTravelAgentIds({ ...travelAgentIds, [requestId]: value });
+    if (travelRequests.find(request => request.requestId === requestId)?.managerApprovalStatus !== 'Approved') {
+      setTravelAgentIds({ ...travelAgentIds, [requestId]: value });
+    }
   };
 
   return (
@@ -91,12 +93,12 @@ export function ManagerTravelRequests() {
             <th>End Date</th>
             <th>Amount</th>
             <th>Reason</th>
-            <th>User Id</th>
+            <th>Employee Id</th>
             <th>Manager Approval Status</th>
             <th>Manager Comments</th>
             <th>Travel Agent Approval Status</th>
             <th>Travel Agent Comments</th>
-            <th>Travel Agent ID</th> {/* Dropdown for Travel Agent ID */}
+            <th>Travel Agent ID</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -111,7 +113,7 @@ export function ManagerTravelRequests() {
                 <td>{new Date(request.endDate).toLocaleDateString()}</td>
                 <td>{request.amount}</td>
                 <td>{request.reason}</td>
-                <td>{request.userId || 'null'}</td>
+                <td>{request.employeeId}</td>
                 <td>
                   <button className={getButtonClass(request.managerApprovalStatus)}>
                     {request.managerApprovalStatus}
@@ -140,6 +142,7 @@ export function ManagerTravelRequests() {
                     className="form-control"
                     value={travelAgentIds[request.requestId] || ""}
                     onChange={(e) => handleTravelAgentIdChange(request.requestId, e.target.value)}
+                    disabled={request.managerApprovalStatus === 'Approved'} // Disable dropdown if approved
                   >
                     <option value="">Select Travel Agent ID</option>
                     {availableTravelAgents.map((agentId) => (
