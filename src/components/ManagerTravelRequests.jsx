@@ -182,7 +182,7 @@ export function ManagerTravelRequests() {
                       <button
                         className="btn btn-danger"
                         onClick={() => handleApproval(request.requestId, 'Rejected')}
-                        disabled={!travelAgentIds[request.requestId]} // Disable if no travel agent ID is selected
+                        // Disable if no travel agent ID is selected
                       >
                         Reject
                       </button>
