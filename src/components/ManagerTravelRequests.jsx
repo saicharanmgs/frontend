@@ -8,7 +8,6 @@ export function ManagerTravelRequests() {
   const [travelAgentIds, setTravelAgentIds] = useState({});
   const [availableTravelAgents, setAvailableTravelAgents] = useState([]); // New state for available travel agents
   const userId = useSelector((state) => state.auth.userId); // Assume this is the manager's ID
-  console.log(userId);
 
   useEffect(() => {
     const fetchTravelRequests = async () => {
@@ -79,6 +78,22 @@ export function ManagerTravelRequests() {
     }
   };
 
+  const handleDelete = async (requestId) => {
+    try {
+      await axios.delete(`http://localhost:9090/api/v1/deleteRequests/${requestId}`);
+      setTravelRequests(travelRequests.filter(request => request.requestId !== requestId));
+    } catch (error) {
+      console.error(`Error deleting request ${requestId}`, error);
+    }
+  };
+
+  const canDelete = (request) => {
+    return (
+      (request.managerApprovalStatus === 'Approved' || request.managerApprovalStatus === 'Rejected') &&
+      (request.travelAgentApprovalStatus === 'Approved' || request.travelAgentApprovalStatus === 'Rejected')
+    );
+  };
+
   return (
     <div className="container">
       <h3 className="alert alert-primary text-center">Travel Requests for Approval</h3>
@@ -138,17 +153,21 @@ export function ManagerTravelRequests() {
                 </td>
                 <td>{request.travelAgentComments}</td>
                 <td>
-                  <select
-                    className="form-control"
-                    value={travelAgentIds[request.requestId] || ""}
-                    onChange={(e) => handleTravelAgentIdChange(request.requestId, e.target.value)}
-                    disabled={request.managerApprovalStatus === 'Approved'} // Disable dropdown if approved
-                  >
-                    <option value="">Select Travel Agent ID</option>
-                    {availableTravelAgents.map((agentId) => (
-                      <option key={agentId} value={agentId}>{agentId}</option>
-                    ))}
-                  </select>
+                  {request.managerApprovalStatus !== 'Approved' ? (
+                    <select
+                      className="form-control"
+                      value={travelAgentIds[request.requestId] || ""}
+                      onChange={(e) => handleTravelAgentIdChange(request.requestId, e.target.value)}
+                      disabled={request.managerApprovalStatus === 'Approved'} // Disable dropdown if approved
+                    >
+                      <option value="">Select Travel Agent ID</option>
+                      {availableTravelAgents.map((agentId) => (
+                        <option key={agentId} value={agentId}>{agentId}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span>{request.travelAgentId || 'Select Travel Agent ID'}</span>
+                  )}
                 </td>
                 <td>
                   {request.managerApprovalStatus === 'Pending' && (
@@ -163,18 +182,25 @@ export function ManagerTravelRequests() {
                       <button
                         className="btn btn-danger"
                         onClick={() => handleApproval(request.requestId, 'Rejected')}
-                        disabled={!travelAgentIds[request.requestId]} // Disable if no travel agent ID is selected
+                        // Disable if no travel agent ID is selected
                       >
                         Reject
                       </button>
                     </>
                   )}
+                  <button
+                    className="btn btn-danger mt-2"
+                    onClick={() => handleDelete(request.requestId)}
+                    disabled={!canDelete(request)} // Disable if request cannot be deleted
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="13" className="text-center">No travel requests found.</td>
+              <td colSpan="14" className="text-center">No travel requests found.</td>
             </tr>
           )}
         </tbody>

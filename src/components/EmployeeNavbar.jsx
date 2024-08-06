@@ -12,6 +12,10 @@ export function EmployeeNavbar() {
     dispatch(logout());
     navigate("/");
   };
+  const func ={
+    backgroundColor : "#ffffff",
+    color : "#000000  "
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -43,7 +47,7 @@ export function EmployeeNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-              <button onClick={handleLogout} className="btn btn-outline-light">
+              <button onClick={handleLogout} className="btn btn-outline-light" style={func}>
                   Logout
               </button>
               </li>

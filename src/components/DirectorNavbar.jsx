@@ -11,6 +11,10 @@ export function DirectorNavbar() {
     dispatch(logout());
     navigate("/");
   };
+  const func ={
+    backgroundColor : "#ffffff",
+    color : "#000000  "
+  }
 
   return (
     <>
@@ -48,7 +52,7 @@ export function DirectorNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <button onClick={handleLogout} className="btn btn-outline-light">
+                <button onClick={handleLogout} className="btn btn-outline-light" style = {func} >
                   Logout
                 </button>
               </li>

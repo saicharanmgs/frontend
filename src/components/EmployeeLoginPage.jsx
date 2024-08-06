@@ -105,14 +105,14 @@ export function EmployeeLoginPage() {
   };  
 
   const getDashboardPath = (designation) => {
-    switch (designation) {
-      case "Employee":
+    switch (designation.toLowerCase()) {
+      case "employee":
         return "/employeedashboard";
-      case "Manager":
+      case "manager":
         return "/managerdashboard";
-      case "Travel Agent":
+      case "travel agent":
         return "/travel-agent-dashboard-v2";
-      case "Director":
+      case "director":
         return "/directordashboard";
       default:
         return "/employeedashboard";
