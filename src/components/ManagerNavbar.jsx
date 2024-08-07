@@ -1,5 +1,3 @@
-// components/ManagerDashboard.jsx
-
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice.js";
@@ -9,14 +7,12 @@ export function ManagerNavbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userId = useSelector((state) => state.auth.userId);
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
-  const func ={
-    backgroundColor : "#ffffff",
-    color : "#000000  "
-  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -53,7 +49,10 @@ export function ManagerNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                <button onClick={handleLogout} className="btn btn-outline-light" style={func}>
+                <button 
+                  onClick={handleLogout} 
+                  className="btn btn-outline-light"
+                >
                   Logout
                 </button>
               </li>

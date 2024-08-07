@@ -6,7 +6,7 @@ export function Home() {
     <div
       className="container-fluid"
       style={{
-        backgroundImage: `url('https://www.pixelstalk.net/wp-content/uploads/images6/Travel-Wallpaper-Free-Download.jpg)`,
+        backgroundImage: `url('https://www.pixelstalk.net/wp-content/uploads/images6/Travel-Wallpaper-Free-Download.jpg')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
