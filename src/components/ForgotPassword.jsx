@@ -20,13 +20,22 @@ export function ForgotPasswordPage() {
     }
 
     try {
-      await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", null, {
+      const response = await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", null, {
         params: {
           email: resetEmail,
         },
       });
-      toast.success("Verification code sent to your email.");
-      navigate("/reset-password");
+      console.log(response);
+      if(response.data == "Email does not exist in database."){
+        toast.error("Enter correct email id.");
+      }
+      else if(response.data == "Error sending verification code."){
+        toast.error("Internal server error");
+      }
+      else{
+        navigate("/reset-password");
+        toast.success("Verification code sent to your email.");
+      }
     } catch (error) {
       toast.error("Failed to send verification code.");
     }
@@ -97,7 +106,7 @@ const headingStyle = {
           <button
             type="button"
             className="btn btn-link"
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/employeelogin')}
           >
             Back to Login
           </button>
