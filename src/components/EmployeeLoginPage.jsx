@@ -87,7 +87,7 @@ export function EmployeeLoginPage() {
 
   const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    UserId: "",
+    userId: "",  // Changed to lowercase to match input field name
     password: "",
   });
   const [errors, setErrors] = useState({});
@@ -158,11 +158,10 @@ export function EmployeeLoginPage() {
     }
   
     try {
-      await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", {
-        params:{
+      await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", null, {
+        params: {
           email: resetEmail,
-        }
-        
+        },
       });
       toast.success("Verification code sent to your email.");
       setShowForgotPassword(false);
@@ -213,7 +212,7 @@ export function EmployeeLoginPage() {
               placeholder="User ID"
               className="input-field"
               name="userId"
-              type="text" // Changed to text
+              type="text"
               value={formData.userId}
               onChange={handleChange}
               style={styles.inputField}
@@ -241,7 +240,9 @@ export function EmployeeLoginPage() {
             />
           </div>
           <br />
-          
+          <button type="submit" className="btn" style={styles.btn}>
+            Log In
+          </button>
           <button
             type="button"
             className="btn btn-link"
