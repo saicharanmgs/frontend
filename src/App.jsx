@@ -21,7 +21,7 @@ import { ManagerNavbar } from "./components/ManagerNavbar";
 import { NewTravelRequest } from "./components/NewTravelRequest";
 import { MyTravelRequests } from "./components/MyTravelRequests";
 import { ManagerTravelRequests} from "./components/ManagerTravelRequests"
-import { ResetPassword } from './components/ResetPassword'; // For named export
+import ResetPasswordPage from './components/ResetPasswordPage'; // For named export
 
 import EmployeesByManager from "./components/EmployeesByManager";
 import TravelAgentDashboard from "./components/TravelAgentDashboard";
@@ -30,6 +30,7 @@ import TravelAgentDashboardV2 from "./components/TravelAgentDashboardV2";
 import TravelAgentNavbarV2 from "./components/TravelAgentNavbarV2";
 import TravelAgentRequestsV2  from "./components/TravelAgentRequestsV2";
 import TravelAgentRequests from "./components/TravelAgentRequests";
+import ForgotPasswordPage from "./components/ForgotPassword";
 
 <com></com>
 
@@ -67,8 +68,8 @@ function App() {
 
           <Route path="/travel-agent-dashboard" element={<><TravelAgentNavbar /><TravelAgentDashboard/></>} />
           <Route path="/travel-agent-requests" element={<><TravelAgentNavbar /><TravelAgentRequests/></>} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         </Routes>
       </Router>
     </>

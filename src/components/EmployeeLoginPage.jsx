@@ -156,17 +156,21 @@ export function EmployeeLoginPage() {
       setResetErrors({ email: "Email is required." });
       return;
     }
-
+  
     try {
-      await axios.post("http://localhost:9090/api/v1/forgot-password", {
-        email: resetEmail,
+      await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", {
+        params:{
+          email: resetEmail,
+        }
+        
       });
-      toast.success("Password reset link sent to your email.");
+      toast.success("Verification code sent to your email.");
       setShowForgotPassword(false);
     } catch (error) {
-      toast.error("Failed to send password reset link.");
+      toast.error("Failed to send verification code.");
     }
   };
+  
 
   const handleResetChange = (event) => {
     setResetEmail(event.target.value);
@@ -236,8 +240,19 @@ export function EmployeeLoginPage() {
               style={styles.inputField}
             />
           </div>
+<<<<<<< Updated upstream
           <button className="btn" type="submit" style={styles.btn}>
             Login
+=======
+          <br />
+          
+          <button
+            type="button"
+            className="btn btn-link"
+            onClick={() => navigate('/forgot-password')}
+          >
+            Forgot Password
+>>>>>>> Stashed changes
           </button>
           <a
             href="#"
@@ -252,6 +267,7 @@ export function EmployeeLoginPage() {
           </a>
         </form>
       </div>
+<<<<<<< Updated upstream
 
       {/* Forgot Password Modal */}
       {showForgotPassword && (
@@ -316,6 +332,8 @@ export function EmployeeLoginPage() {
           </form>
         </div>
       )}
+=======
+>>>>>>> Stashed changes
     </div>
   );
 }
