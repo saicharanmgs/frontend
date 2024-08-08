@@ -249,17 +249,6 @@ export function EmployeeLoginPage() {
           >
             Forgot Password
           </button>
-          <a
-            href="#"
-            className="btn-link"
-            style={styles.btnLink}
-            onClick={(e) => {
-              e.preventDefault();
-              setShowForgotPassword(true);
-            }}
-          >
-            Forgot your password?
-          </a>
         </form>
       </div>
     </div>
