@@ -45,15 +45,19 @@ export function ResetPasswordPage() {
     if (!validateForm()) return;
 
     try {
-      await axios.post("http://localhost:9090/api/v1/reset-password", null, {
+      const response = await axios.post("http://localhost:9090/api/v1/reset-password", null, {
         params: {
           email: formData.email,
           verificationCode: formData.verificationCode,
           newPassword: formData.newPassword,
         },
       });
-      toast.success("Password reset successfully.");
-      navigate("/");
+      if(response.data == 'Password reset successfully.'){
+        toast.success("Password reset successfully.");
+        navigate("/");
+      } else {
+        toast.error('incorrect verification code');
+      }
     } catch (error) {
       toast.error("Failed to reset password.");
     }
