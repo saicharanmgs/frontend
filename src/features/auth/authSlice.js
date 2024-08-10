@@ -1,40 +1,48 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
-    userId: null,
-    managerId: null,
-    travelAgentId: null, // Add travelAgentId to the initial state
-    token: null,
-    status: 'idle', // 'idle', 'loading', 'succeeded', 'failed'
+    userId: localStorage.getItem("userId") || null,
+    managerId: localStorage.getItem("managerId") || null,
+    designation: localStorage.getItem("designation") || null,
+    status: "idle",
     error: null,
   },
   reducers: {
     loginRequest: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     loginSuccess: (state, action) => {
-      state.status = 'succeeded';
-      state.userId = action.payload.userId;
-      state.managerId = action.payload.managerId;
-      state.travelAgentId = action.payload.travelAgentId; // Set travelAgentId on login
-      state.token = action.payload.token;
+      const { userId, managerId, designation } = action.payload;
+      state.userId = userId;
+      state.managerId = managerId;
+      state.designation = designation;
+      state.status = "succeeded";
+
+      // Persist state in localStorage
+      localStorage.setItem("userId", userId);
+      localStorage.setItem("managerId", managerId);
+      localStorage.setItem("designation", designation);
     },
     loginFailure: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
       state.error = action.payload;
     },
     logout: (state) => {
       state.userId = null;
       state.managerId = null;
-      state.travelAgentId = null; // Clear travelAgentId on logout
-      state.token = null;
-      state.status = 'idle';
+      state.designation = null;
+      state.status = "idle";
+      state.error = null;
+
+      // Clear state from localStorage
+      localStorage.removeItem("userId");
+      localStorage.removeItem("managerId");
+      localStorage.removeItem("designation");
     },
   },
 });
 
 export const { loginRequest, loginSuccess, loginFailure, logout } = authSlice.actions;
-
 export default authSlice.reducer;

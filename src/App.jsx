@@ -31,11 +31,33 @@ import TravelAgentNavbarV2 from "./components/TravelAgentNavbarV2";
 import TravelAgentRequestsV2  from "./components/TravelAgentRequestsV2";
 import TravelAgentRequests from "./components/TravelAgentRequests";
 import ForgotPasswordPage from "./components/ForgotPassword";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "./features/auth/authSlice";
+import React, { useEffect } from "react";
 
 <com></com>
 
 // this is root component all other components goes here
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const managerId = localStorage.getItem("managerId");
+    const designation = localStorage.getItem("designation");
+
+    if (userId && designation) {
+      dispatch(
+        loginSuccess({
+          userId,
+          managerId,
+          designation,
+        })
+      );
+    }
+  }, [dispatch]);
+
   return (
     <>
       <Router>

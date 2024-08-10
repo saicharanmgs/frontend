@@ -150,26 +150,6 @@ export function EmployeeLoginPage() {
     }
   };
 
-  // this will be called when send email is clicked
-  const handleForgotPassword = async () => {
-    if (!resetEmail.trim()) {
-      setResetErrors({ email: "Email is required." });
-      return;
-    }
-  
-    try {
-      await axios.post("http://localhost:9090/api/v1/forgot-password/send-code", null, {
-        params: {
-          email: resetEmail,
-        },
-      });
-      toast.success("Verification code sent to your email.");
-      setShowForgotPassword(false);
-    } catch (error) {
-      toast.error("Failed to send verification code.");
-    }
-  };
-  
 
   const handleResetChange = (event) => {
     setResetEmail(event.target.value);
