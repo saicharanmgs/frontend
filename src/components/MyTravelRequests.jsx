@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/MyTravelRequests.css"; // Import the CSS file
 
 export function MyTravelRequests() {
   const [travelRequests, setTravelRequests] = useState([]);
   const userId = useSelector((state) => state.auth.userId);
+  const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
     // Fetch travel requests when the component mounts
@@ -39,6 +40,10 @@ export function MyTravelRequests() {
     }
   };
 
+  const handleViewClick = (requestId) => {
+    navigate(`/ticket-details-view/${requestId}`);
+  };
+
   return (
     <div className="container">
       <h3 className="alert alert-primary text-center">My Travel Requests</h3>
@@ -57,7 +62,7 @@ export function MyTravelRequests() {
             <th>Manager Comments</th>
             <th>Travel Agent Approval Status</th>
             <th>Travel Agent Comments</th>
-            <th></th>
+            <th>Ticket Details</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +88,18 @@ export function MyTravelRequests() {
                   </button>
                 </td>
                 <td>{request.travelAgentComments}</td>
+                <td>
+                  <button
+                    className="btn btn-info"
+                    disabled={
+                      request.managerApprovalStatus !== 'Approved' ||
+                      request.travelAgentApprovalStatus !== 'Approved'
+                    }
+                    onClick={() => handleViewClick(request.requestId)}
+                  >
+                    View
+                  </button>
+                </td>
               </tr>
             ))
           ) : (

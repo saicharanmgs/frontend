@@ -34,6 +34,8 @@ import ForgotPasswordPage from "./components/ForgotPassword";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "./features/auth/authSlice";
 import React, { useEffect } from "react";
+import TicketDetailsForm from "./components/TicketDetailsForm";
+import TicketDetailsView from "./components/TicketDetailsView";
 
 <com></com>
 
@@ -92,6 +94,8 @@ function App() {
           <Route path="/travel-agent-requests" element={<><TravelAgentNavbar /><TravelAgentRequests/></>} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/ticket-details/:requestId" element={<TicketDetailsForm />}/>
+          <Route path="/ticket-details-view/:requestId"element={<TicketDetailsView />}/>
         </Routes>
       </Router>
     </>

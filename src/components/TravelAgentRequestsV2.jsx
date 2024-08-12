@@ -1,13 +1,13 @@
-// components/TravelAgentRequests.jsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export function TravelAgentRequestsV2() {
   const [travelRequests, setTravelRequests] = useState([]);
   const [comments, setComments] = useState({});
   const userId = useSelector((state) => state.auth.userId);
+  const navigate = useNavigate(); // Initialize navigate function
 
   useEffect(() => {
     const fetchTravelRequests = async () => {
@@ -58,6 +58,10 @@ export function TravelAgentRequestsV2() {
 
   const handleCommentChange = (requestId, value) => {
     setComments({ ...comments, [requestId]: value });
+  };
+
+  const handleViewTicketDetails = (requestId) => {
+    navigate(`/ticket-details/${requestId}`); // Navigate to TicketDetailsView with requestId
   };
 
   return (
@@ -129,6 +133,14 @@ export function TravelAgentRequestsV2() {
                         Reject
                       </button>
                     </>
+                  )}
+                  {request.travelAgentApprovalStatus === 'Approved' && (
+                    <button
+                      className="btn btn-info mt-2"
+                      onClick={() => handleViewTicketDetails(request.requestId)}
+                    >
+                      Generate Ticket
+                    </button>
                   )}
                 </td>
               </tr>

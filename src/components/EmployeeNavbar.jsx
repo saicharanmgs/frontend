@@ -47,8 +47,9 @@ export function EmployeeNavbar() {
                 </Link>
               </li>
               <li className="nav-item">
-              <button onClick={handleLogout} className="btn btn-outline-light" style={func}>
-                  Logout
+              <button onClick={handleLogout}
+               className="btn btn-outline-light">
+                Logout
               </button>
               </li>
             </ul>

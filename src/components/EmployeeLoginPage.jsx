@@ -220,9 +220,10 @@ export function EmployeeLoginPage() {
             />
           </div>
           <br />
-          <button type="submit" className="btn" style={styles.btn}>
+          <button type="submit" className="btn" style={styles.btn} >
             Log In
           </button>
+          <br/>
           <button
             type="button"
             className="btn btn-link"
