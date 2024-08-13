@@ -45,11 +45,6 @@ export function TravelAgentNavbarV2() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/profile" className="nav-link text-white">
-                  Profile
-                </Link>
-              </li>
-              <li className="nav-item">
                 <button onClick={handleLogout} className="btn btn-outline-light">
                   Logout
                 </button>

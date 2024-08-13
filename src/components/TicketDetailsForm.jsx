@@ -25,7 +25,7 @@ const TicketDetailsForm = () => {
         })
         .catch(error => {
           console.error('Error fetching ticket details:', error);
-          toast.error('Error fetching ticket details.');
+          //toast.error('Error fetching ticket details.');
         });
     }
   }, [requestId]);
@@ -42,9 +42,11 @@ const TicketDetailsForm = () => {
     try {
       if (requestId) {
         await axios.put(`http://localhost:9090/api/tickets/saveticket/${requestId}`, ticketDetails);
+        console.log("put")
         toast.success('Ticket details updated successfully');
       } else {
         await axios.post('http://localhost:9090/api/tickets/saveticket', ticketDetails);
+        console.log("post")
         toast.success('Ticket details created successfully');
       }
       navigate('/travel-agent-requests-v2'); // Navigate to a success page or another route if needed
